@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>ex2</title>
+    <style>
+        .col-3 {
+            width: 150px;
+            height: 150px;
+            background-color: #eee;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3 box1">box1</div>
+            <div class="col-3 box2">box2</div>
+            <div class="col-3 box3">box3</div>
+            <div class="col-3 box4">box4</div>
+            <div class="col-3 box5">box5</div>
+            <div class="col-3 box6">box6</div>
+            <div class="col-3 box7">box7</div>
+            <div class="col-3 box8">box8</div>
+            <div class="col-3 box9">box9</div>
+            <div class="col-3 box10">box10</div>
+            <div class="col-3 box11">box11</div>
+            <div class="col-3 box12">box12</div>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script>
+        $('.col-3').click(function () {
+            console.log('.col-3 clicked', $(this).css('background', 'red').nextAll().css('background', 'red'));
+        });
+    </script>
+</body>
+
+</html>
