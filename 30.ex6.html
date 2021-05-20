@@ -44,8 +44,8 @@
             ['蘆洲', '三重', '新店'],
         ];
 
-
-        // //定義city切換時的函式
+        //map 迴圈的使用方式
+        //定義city切換時的函式
         // $('#city').on('change', function () {
         //     //點擊進來時 district的選單先做清除.之後再做接收避免資料一直往下疊加
         //     $('#district option').remove();
@@ -55,12 +55,34 @@
         //     });
         // });
 
-        $('#city').on('change', function () {
-            $('#district option').remove();
-            for (let i = 0; i <= districtObj.length; i++) {
-                $('#district').append('<option value="' + districtObj[i][$('#city').val()] + '">' + districtObj[i][$('#city').val()] + '</option>');
+        //for 迴圈的使用方式
+        // $('#city').on('change', function () {
+        //     $('#district option').remove();
+        //     for (let i = 0; i <= districtObj.length; i++) {
+        //         $('#district').append('<option value="' + districtObj[i][$(this).val()] + '">' + districtObj[i][$(this).val()] + '</option>');
+        //     }
+        // });
+
+        //jq的方式寫迴圈
+        $('#city').change(function () {
+            let countryIndex = $(this).val();
+            console.log(countryIndex);
+
+            for (let i = 0; i < districtObj.length; i++) {
+                console.log('hi', i);
+                $('#district').children().eq(i).text(districtObj[countryIndex][i]);
             }
         });
+        // //each 迴圈的使用方式
+
+        // $('#city').on('change', function () {
+        //     $('#district option').remove();
+
+        //     districtObj.each(function (e) {
+        //         console.log($(this));
+        //         // $('#district').append('<option value="' + districtObj[$('#city').val()] + '">' + districtObj[$('#city').val()] + '</option>');
+        //     })
+        // });
 
         // $('#city').change(function () {
         //     console.log('hi', districtObj);
