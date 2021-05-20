@@ -65,12 +65,12 @@
 
         //jq的方式寫迴圈
         $('#city').change(function () {
-            let countryIndex = $(this).val();
-            console.log(countryIndex);
+            // let countryIndex = $(this).val();
+            // console.log(countryIndex);
 
             for (let i = 0; i < districtObj.length; i++) {
-                console.log('hi', i);
-                $('#district').children().eq(i).text(districtObj[countryIndex][i]);
+                // console.log('hi', i);
+                $('#district').children().eq(i).text(districtObj[$(this).val()][i]);
             }
         });
         // //each 迴圈的使用方式
