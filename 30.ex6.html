@@ -55,6 +55,16 @@
         //     });
         // });
 
+        //JQ的map
+        $('#city').on('change', function () {
+            const cityValue = $(this).val();
+            // $('#district option').remove();
+            $('#district option').map(function () {
+                $(this).text(districtObj[cityValue][$(this).val()])
+                console.log([$(this).val()][0]);
+            });
+        });
+
         //for 迴圈的使用方式
         // $('#city').on('change', function () {
         //     $('#district option').remove();
@@ -64,15 +74,15 @@
         // });
 
         //jq的方式寫迴圈
-        $('#city').change(function () {
-            // let countryIndex = $(this).val();
-            // console.log(countryIndex);
+        // $('#city').change(function () {
+        //     // let countryIndex = $(this).val();
+        //     // console.log(countryIndex);
 
-            for (let i = 0; i < districtObj.length; i++) {
-                // console.log('hi', i);
-                $('#district').children().eq(i).text(districtObj[$(this).val()][i]);
-            }
-        });
+        //     for (let i = 0; i < districtObj.length; i++) {
+        //         // console.log('hi', i);
+        //         $('#district').children().eq(i).text(districtObj[$(this).val()][i]);
+        //     }
+        // });
         // //each 迴圈的使用方式 暫時未完成
 
         // $('#city').on('change', function () {
