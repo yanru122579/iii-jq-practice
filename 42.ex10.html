@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>ex10</title>
+    <style>
+        .square {
+            width: 600px;
+            height: 600px;
+            background-color: orange;
+        }
+
+        .box {
+            width: 600px;
+            height: 600px;
+            background-color: #eee;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+
+            margin: 10px;
+            border-radius: 50%;
+
+        }
+
+        .circle3 {
+            background-color: red;
+        }
+
+        .circle4 {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class=" col-6">
+                <div class="square"></div>
+            </div>
+
+            <div class="box col-6 d-flex">
+                <div class="circle circle3"></div>
+                <div class="circle circle4"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script>
+        $('.circle3').click(function () {
+
+            $('.square').removeClass('circle4')
+            $('.square').addClass('circle3')
+
+        });
+        $('.circle4').click(function () {
+
+            $('.square').removeClass('circle3')
+            $('.square').addClass('circle4')
+
+        });
+
+        // $('.circle').on('click', function () {
+        //     console.log('點擊的圓', $(this));
+        //     $('.square').css('background', `$(this).css('background-color')`)
+        // });
+    </script>
+</body>
+
+</html>
