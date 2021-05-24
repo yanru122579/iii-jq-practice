@@ -61,21 +61,38 @@
     <script>
 
 
-        $('#left').on('click', function () {
-            console.log('left');
-            $('.box').css('left', "-=20");
+        let myInterval = 0;
+        let movex = 20;
+        $('#left').on('mousedown', function () {
+            console.log('left', $('.box').css('left'));
+            myInterval = setInterval(() => {
+                if (parseInt($('.box').css('left')) > 0) {
+                    $('.box').css('left', `-=${movex}`);
+                }
+            }, 500)
         });
-        $('#right').on('click', function () {
-            console.log('rifht');
-            $('.box').css('left', "+=20");
+
+        $('#left').on('mouseup', function () {
+            clearInterval(myInterval);
+        });
+        $('#right').on('mousedown', function () {
+            console.log('rifht', $('.box').css('right'));
+
+            if (parseInt($('.box').css('right')) > 0) {
+                $('.box').css('left', `+=${movex}`);
+            }
         });
         $('#up').click(function () {
-            console.log('up');
-            $('.box').css('top', "-=20");
+            if (parseInt($('.box').css('top')) > 0) {
+                console.log('up', $('.box').css('top'));
+                $('.box').css('top', `-=${movex}`);
+            }
         });
         $('#down').click(function () {
-            console.log('down');
-            $('.box').css('top', "+=20");
+            if (parseInt($('.box').css('bottom')) > 0) {
+                console.log('down', $('.box').css('top'));
+                $('.box').css('top', `+=${movex}`);
+            }
         });
     </script>
 </body>
