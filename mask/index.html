@@ -43,6 +43,30 @@
             </div> -->
 
         </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-12 col-lg-4">
+                <div id="cart" class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">購物車</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>品名</th>
+                                    <th>單價</th>
+                                    <th>數量</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-list">
+
+                            </tbody>
+                        </table>
+
+                        <span id="totalPrice" style="float:right"></span>
+                        <button class="btn btn-info btn-block">結帳</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -88,6 +112,10 @@
 
         };
         getDate();
+
+        $(dpcument).on('click', 'fa-shopping-cart', function () {
+
+        });
     </script>
 </body>
 
