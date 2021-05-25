@@ -25,6 +25,7 @@
             position: absolute;
             top: 0;
             left: 0;
+
         }
     </style>
 </head>
@@ -61,37 +62,71 @@
     <script>
 
 
-        let myInterval = 0;
-        let movex = 20;
-        $('#left').on('mousedown', function () {
-            console.log('left', $('.box').css('left'));
-            myInterval = setInterval(() => {
-                if (parseInt($('.box').css('left')) > 0) {
-                    $('.box').css('left', `-=${movex}`);
-                }
-            }, 500)
-        });
+        // let myInterval;
+        // let movex = 20;
+        // $('#left').on('mousedown', function () {
+        //     // console.log('left', $('.box').css('left'));
+        //     myInterval = setInterval(() => {
+        //         if (parseInt($('.box').css('left')) > 0) {
+        //             $('.box').css('left', `-=${movex}`);
+        //         }
+        //     }, 500)
+        // });
 
-        $('#left').on('mouseup', function () {
+        // $('#left').on('mouseup', function () {
+        //     clearInterval(myInterval);
+        // });
+        // $('#right').on('mousedown', function () {
+        //     console.log('rifht', $('.box').css('right'));
+
+        //     if (parseInt($('.box').css('right')) > 0) {
+        //         $('.box').css('left', `+=${movex}`);
+        //     }
+        // });
+        // $('#up').click(function () {
+        //     if (parseInt($('.box').css('top')) > 0) {
+        //         console.log('up', $('.box').css('top'));
+        //         $('.box').css('top', `-=${movex}`);
+        //     }
+        // });
+        // $('#down').click(function () {
+        //     if (parseInt($('.box').css('bottom')) > 0) {
+        //         console.log('down', $('.box').css('top'));
+        //         $('.box').css('top', `+=${movex}`);
+        //     }
+        // });
+        let xMove = 100;
+        let myInterval;
+        $('#right').mousedown(function () {
+
+            myInterval = setInterval(() => {
+                if (parseInt($('.box').css('right')) > 0) {
+                    $('.box').css('left', `+=${xMove}`)
+                }
+            }, 500);
+        });
+        $('#right').mouseup(function () {
             clearInterval(myInterval);
         });
-        $('#right').on('mousedown', function () {
-            console.log('rifht', $('.box').css('right'));
+        $('#left').mousedown(function () {
+            myInterval = setInterval(() => {
 
-            if (parseInt($('.box').css('right')) > 0) {
-                $('.box').css('left', `+=${movex}`);
-            }
+                if (parseInt($('.box').css('left')) > 0) {
+                    $('.box').css('left', `-=${xMove}`)
+                }
+            }, 500);
+        });
+        $('#left').mouseup(function () {
+            clearInterval(myInterval);
         });
         $('#up').click(function () {
             if (parseInt($('.box').css('top')) > 0) {
-                console.log('up', $('.box').css('top'));
-                $('.box').css('top', `-=${movex}`);
+                $('.box').css('top', `-=${xMove}`)
             }
         });
         $('#down').click(function () {
             if (parseInt($('.box').css('bottom')) > 0) {
-                console.log('down', $('.box').css('top'));
-                $('.box').css('top', `+=${movex}`);
+                $('.box').css('top', `+=${xMove}`)
             }
         });
     </script>
