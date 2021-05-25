@@ -42,8 +42,11 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script>
         $('.box img').click(function () {
+            // 查看回傳的數值為何
             console.log('hi', $(this).attr('src'));
+
             let srcX = $(this).attr('src')
+            //先刪除原圖 在增加點擊的那張圖
             $('.item1 img').removeAttr('src').prop('src', `${srcX}`);
         });
     </script>
