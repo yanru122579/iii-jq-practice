@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>mask</title>
+    <style>
+        /* input輸入框設定type=number時，不要原本預設的箭頭加減數字的按鈕 */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .saved-position {
+            width: fit-content;
+            margin-left: auto;
+            margin-right: 5%;
+
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <p id="saved-position" class="saved-position"><i class="fas fa-envelope"></i></p>
+    </nav>
+    <div class="container">
+        <h5>Hi, <訪客>歡迎到資策會口罩銷售平台</h5>
+        <h6>請選擇您想要購買的口罩及數量</h6>
+        <div class="row" id="mask">
+            <!-- <div class="mt-3 col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <img src="./images/item-1.jpg" class="card-img-top" alt="">
+
+                    <div class="card-body py-0">
+                        <h5>
+                            xxx口罩
+                        </h5>
+                        <div class="d-flex justify-content-between">
+                            <p>$1234</p>
+                            <div class="btn-wrap">
+                                <button class="btn btn-primary"><i class="fas fa-heart"></i></button>
+                                <button class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-4">
+                <div id="cart" class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">購物車</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>品名</th>
+                                    <th>單價</th>
+                                    <th style="width:70px;padding-left:30px">數量</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="cart-list">
+                                <!-- <tr class="tr">
+                                    <td class="d-flex text-nowrap">
+                                        <button class="btn btn-secondary addBtn"
+                                            style="margin-right: 1px; padding: 0 5px;">+</button>
+                                        <input type="number" style="width: 30px;" class="number text-rightmath" min="0"
+                                            value="1">
+                                        <button class="btn btn-secondary minusBtn"
+                                            style="margin-left:1px;padding: 0 5px;">-</button>
+                                        <button class="btn btn-danger delBtn "
+                                            style="margin-left: 2px;padding: 0 5px;"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </td>
+                                </tr> -->
+
+                            </tbody>
+                        </table>
+                        <span id="totalPrice" style="float:right"></span>
+                        <button class="btn btn-info btn-block" id="checkoutBtn" disabled='true'>結帳</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        //利用ajax取得資料
+        function getData() {
+            $.ajax({
+                method: "GET",
+                url: "./mask.json",
+                dataType: "json"
+            })
+                .done(function (data) {
+                    console.log('data', data);
+                    //取得資料後用forEach方式生成卡片
+                    data.forEach(function (item) {
+
+                        $('#mask').append(`
+                        <div class="mt-3 col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <img src="./images/${item.image}" class="card-img-top" alt="">
+
+                    <div class="cart-body py-0">
+                        <h5 class="cart-title"data-name="${item.name}">
+                            ${item.name}
+                        </h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="cart-price" data-price="${item.price}"">$${item.price}</p>
+                            <div class="btn-wrap">
+                                <button class="btn btn-primary shopping-saved"><i class="fas fa-heart"></i></button>
+                                <button class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`)
+                    })
+                })
+        };
+        //執行迴圈
+        getData();
+
+        //點擊購物車圖示時 將金額及名稱添加至購物車清單
+        $(document).on('click', '.fa-shopping-cart', function () {
+            //找到最近的父層內有.cart-body的dom 並在他底下搜尋 .cart-title 裡面的data (name)
+            const name = $(this).closest('.cart-body').find('.cart-title').data('name')
+            const price = $(this).closest('.cart-body').find('.cart-price').data('price')
+            console.log(name);
+            console.log(price);
+            //如果購物車清單tr的長度=0 ((沒資料))
+            if ($('#cart-list tr').length === 0) {
+                //就把名稱與價格代入 appendNewList 的函式
+                appendNewList(name, price);
+
+                //如果清單內有資料
+            } else {
+                //假設不存在
+                let isExist = false;
+                //將清單內的資料用each跑一遍
+                $('#cart-list tr').each(function () {
+                    //設一個變數 = 取得已存在清單內的資料名稱內的文字(商品名稱)
+                    const listName = $(this).find('.cart-name').text();
+                    //如果比對到清單內的名稱與欲存放的名稱相符合時
+                    if (listName === name) {
+                        //已存在的變數改為true
+                        isExist = true;
+
+                        //如果已存在,則口罩數量+1
+                        numberChange($(this).find('.addBtn'), 'add')
+                    }
+                })
+                //如果不存在 則執行appenNewList的函式 將名稱與金額加入
+                if (!isExist) appendNewList(name, price);
+            } checkTotalPrice();
+        });
+
+        function appendNewList(name, price) {
+            $('#cart-list').append(`
+            <tr class="tr">
+                <td class="cart-name">${name}</td>
+                <td class="cart-price">${price}</td>
+                
+                <td class="d-flex text-nowrap">
+                    <button class="btn btn-secondary addBtn"
+                    style="margin-right: 1px; padding: 0 5px;">+</button>
+                    <input type="number" style="width: 30px;" class="number text-rightmath" min="0"
+                    value="1">
+                    <button class="btn btn-secondary minusBtn"
+                    style="margin-left:1px;padding: 0 5px;">-</button>
+                    <button class="btn btn-danger delBtn "
+                    style="margin-left: 2px;padding: 0 5px;"><i
+                    class="fas fa-trash-alt"></i></button>
+                </td>
+                </tr>
+                               
+            `)
+
+        }
+        //點擊數量增加按鈕
+        $(document).on('click', ".addBtn", function () {
+            console.log('addbtn', $(this));
+            numberChange($(this), 'add')
+
+        });
+        //點擊數量減少按鈕
+        $(document).on('click', ".minusBtn", function () {
+            console.log('minus', $(this));
+            numberChange($(this), 'minus')
+        })
+
+        //判斷數字改變
+        function numberChange(myDom, type) {
+            let value;
+            switch (type) {
+                case 'add':
+                    //讓數量等於原本數量+1,最多不大於99個數量
+                    value = parseInt(myDom.next().val()) + 1;
+                    if (value > 99) alert('抱歉,目前最多只能買99盒');
+                    myDom.next().val(value > 99 ? 99 : value);
+
+                    //重新計算總金額
+                    checkTotalPrice();
+                    break;
+                case 'minus':
+                    //讓數量等於原本數量-1
+                    value = parseInt(myDom.prev().val()) - 1;
+                    myDom.prev().val((value < 0) ? 0 : value);
+
+                    //如果數量小於等於0則移除商品
+                    if (value <= 0) {
+                        console.log('remove');
+                        $(this).closest('tr').remove();
+                    }
+                    //重新計算總金額
+                    checkTotalPrice();
+                    break;
+
+                default:
+                    console.log('nothing default');
+
+            }
+        }
+
+        //點擊刪除按鈕
+        $(document).on("click", ".delBtn", function () {
+            //從購物車將該口罩移除
+            $(this).closest('tr').remove();
+
+            //重新計算總金額
+            checkTotalPrice();
+        });
+
+        //檢查手動輸入數字
+        $(document).on("change", ".number", function () {
+            //如果輸入有小數點,則去掉小數點後面的數字,並跳出警告視窗
+            if ($(this).val().indexOf('.') != -1) {
+                let value = $(this).val();
+                value = value.substring(0, value.indexOf('.'));
+                $(this).val(value === '' ? 0 : value);
+                alert('口罩數量不能有小數點')
+            }
+
+            //如果超過99個 就讓數字回到99 並跳出視窗通知使用者最大購買數量
+            else if ($(this).val() > 99) {
+                $(this).val(99);
+                alert('抱歉,每種口罩最多只能購買99盒')
+            }
+            checkTotalPrice();
+        })
+
+        //確認總價格
+        function checkTotalPrice() {
+            //初始化金額
+            let totalPrice = 0;
+            console.log(totalPrice);
+            //尋找購物車清單中所有的單價及數量,並將單價數量相乘後加到總金額
+            $("#cart-list tr").each(function () {
+                console.log('this', $(this));
+                let price = parseInt($(this).find(".cart-price").text());
+                let nowVal = parseInt($(this).find('.number').val());
+                totalPrice += price * nowVal;
+                console.log('price', price);
+                console.log('nowVal', nowVal)
+                console.log('totalPrice', totalPrice);
+            });
+            //判斷總金額
+
+            if (totalPrice == 0) {
+
+                //如果總金額為零,則清除總計文字,請且讓結帳按鈕 disabled=true
+                $("#totalPrice").text('');
+                $("#checkoutBtn").attr('disabled', true)
+            }
+            else {
+                //如果總金額不為零,文字顯示總金額,並且讓結帳按鈕disabled=flase
+                $("#totalPrice").text("總計:" + totalPrice + "元");
+                $("#checkoutBtn").attr('disabled', false);
+            }
+        }
+
+        $(document).on('click', '.shopping-saved', function () {
+            const heart = $(this);
+            const position = heart.offset();
+            const envPosition = $('#saved-position').offset();
+            console.log(envPosition);
+            console.log(position);
+
+            $('body').append('<div class="heart-fly"></div>')
+            const flyHeart = $('.heart-fly')
+            flyHeart.css({ top: position.top + (heart.height() / 2) + 'px', left: position.left + (heart.width() / 2) + 'px', position: 'absolute', transition: '.5s' })
+            flyHeart.append('<i class="fas fa-heart"></i>');
+            flyHeart.css({ width: '28px', height: '28px', color: 'red' });
+
+            $(flyHeart).fadeIn(500, function () {
+                $(flyHeart).css({ top: envPosition.top + 20 + 'px', left: envPosition.left + 'px', opacity: '.5' })
+            }).delay(600).fadeIn('slow', function () {
+                $(flyHeart).css('top', envPosition.top + 'px')
+            }).delay(300).promise().done(function () {
+                $('.heart-fly').remove();
+            })
+
+            // //也可以用setTimeout設定幾秒後消失 但時間比較不準月
+            // setTimeout(() => {
+            //     $('.heart-fly').remove();
+
+            // }, 1100);
+        });
+
+    </script>
+</body>
+
+</html>
